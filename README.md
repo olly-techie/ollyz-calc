@@ -110,4 +110,5 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 ## Author
 
-Olayiwola Abdullah — [@devollycodes](https://devollycodes.aqinode.click)
+Olayiwola Abdullah — [@devollycodes]
+https://devollycodes.aqinode.click
