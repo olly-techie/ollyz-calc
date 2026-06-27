@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
     private static final String LIFECYCLE_TAG = "Lifecycle";
     private static final String PREFS_NAME = "ollyz_calc_state";
     private static final String STATE_KEY = "calculator_state";
-    private static final String DEFAULT_STATE = "{\"expression\":\"\",\"result\":\"0\",\"mode\":\"basic\",\"angleMode\":\"DEG\"}";
+    private static final String DEFAULT_STATE = "{"expression":"","result":"0","mode":"basic","angleMode":"DEG"}";
 
     private WebView webView;
     private SharedPreferences preferences;
