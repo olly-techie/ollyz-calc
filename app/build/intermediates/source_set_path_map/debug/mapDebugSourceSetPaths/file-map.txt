@@ -1,0 +1,7 @@
+com.olly.ollyzcalc.app-pngs-0 /home/olly/dev/ollyz-calc/app/build/generated/res/pngs/debug
+com.olly.ollyzcalc.app-resValues-1 /home/olly/dev/ollyz-calc/app/build/generated/res/resValues/debug
+com.olly.ollyzcalc.app-packageDebugResources-2 /home/olly/dev/ollyz-calc/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.olly.ollyzcalc.app-packageDebugResources-3 /home/olly/dev/ollyz-calc/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.olly.ollyzcalc.app-debug-4 /home/olly/dev/ollyz-calc/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.olly.ollyzcalc.app-debug-5 /home/olly/dev/ollyz-calc/app/src/debug/res
+com.olly.ollyzcalc.app-main-6 /home/olly/dev/ollyz-calc/app/src/main/res

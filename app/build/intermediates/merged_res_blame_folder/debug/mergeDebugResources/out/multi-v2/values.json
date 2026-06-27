@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.olly.ollyzcalc.app-mergeDebugResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "/home/olly/dev/ollyz-calc/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "500"
+                    }
+                }
+            ]
+        }
+    ]
+}
