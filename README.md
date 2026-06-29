@@ -3,7 +3,7 @@
 A scientific calculator Android app built for **SEN 104 & 214**, demonstrating Android Activity lifecycle methods alongside a full-featured calculator engine.
 
 ## DOWNLOAD LINK
-https://github.com/olly-techie/ollyz-calc/releases/download/v2.0.0/app-debug.apk
+https://github.com/olly-techie/ollyz-calc/releases/download/v2.5.0/app-debug.apk
 
 ## Overview
 
