@@ -1,14 +1,15 @@
 :root {
     --bg: #0a0a0f;
-    --panel: rgba(20, 22, 30, 0.55);
+    --panel: rgba(25, 27, 38, 0.6);
     --panel-solid: #14161e;
     --accent: #00ff88;
-    --accent-dim: rgba(0, 255, 136, 0.15);
+    --accent-glow: rgba(0, 255, 136, 0.3);
+    --accent-dim: rgba(0, 255, 136, 0.1);
     --text: #e8e8ef;
     --muted: #7a7a8c;
-    --key: rgba(255, 255, 255, 0.04);
-    --key-border: rgba(255, 255, 255, 0.08);
-    --op: rgba(0, 255, 136, 0.10);
+    --key: rgba(255, 255, 255, 0.05);
+    --key-border: rgba(255, 255, 255, 0.1);
+    --op: rgba(0, 255, 136, 0.15);
     --danger: #ff5577;
     --mono: "JetBrains Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
 }
@@ -42,22 +43,104 @@ body {
 /* ---------- Topbar ---------- */
 .topbar {
     text-align: center;
-    padding: 6px 0 10px;
+    padding: 12px 0 10px;
 }
 .brand {
     margin: 0;
-    font-size: 22px;
-    letter-spacing: 4px;
-    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 6px;
+    font-weight: 800;
     text-transform: uppercase;
     color: var(--text);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 .brand span {
     color: var(--accent);
-    text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+    text-shadow: 0 0 15px var(--accent-glow);
 }
 
-/* ---------- Tabs ---------- */
+/* ---------- History Panel ---------- */
+.history-panel {
+    background: var(--panel);
+    border: 1px solid var(--key-border);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.history-header {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+}
+.history-header:hover {
+    color: var(--accent);
+}
+.history-arrow {
+    transition: transform 0.3s ease;
+}
+.history-panel.open .history-arrow {
+    transform: rotate(180deg);
+}
+.history-content {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--key-border);
+    background: rgba(0, 0, 0, 0.2);
+}
+.history-panel.open .history-content {
+    display: block;
+}
+.history-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.history-item {
+    padding: 10px;
+    background: var(--key);
+    border: 1px solid var(--key-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+}
+.history-item:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+}
+.history-item .h-expr {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+.history-item .h-res {
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 700;
+}
+.history-empty {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+}
+
 .tabs {
     display: flex;
     gap: 6px;
@@ -99,6 +182,23 @@ body {
     box-shadow: inset 0 0 24px rgba(0, 255, 136, 0.05),
                 0 0 16px rgba(0, 0, 0, 0.4);
     overflow: hidden;
+    position: relative;
+}
+.display::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%
+    ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.02),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.02)
+    );
+    background-size: 100% 4px, 3px 100%;
 }
 .display.hidden { display: none; }
 .expr {
@@ -107,6 +207,8 @@ body {
     min-height: 20px;
     word-break: break-all;
     white-space: pre-wrap;
+    position: relative;
+    z-index: 1;
 }
 .result {
     color: var(--accent);
@@ -115,6 +217,8 @@ body {
     margin-top: 6px;
     word-break: break-all;
     text-shadow: 0 0 14px rgba(0, 255, 136, 0.4);
+    position: relative;
+    z-index: 1;
 }
 .result.error {
     color: var(--danger);
@@ -142,20 +246,31 @@ body {
     border: 1px solid var(--key-border);
     border-radius: 14px;
     padding: 16px 0;
-    transition: transform 0.05s ease, background 0.15s ease;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, box-shadow 0.2s ease;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
 }
-.key:active { transform: scale(0.94); background: rgba(255,255,255,0.10); }
+.key:active {
+    transform: scale(0.92);
+    background: rgba(255,255,255,0.12);
+    box-shadow: 0 0 12px var(--accent-dim);
+}
 .key.op  { color: var(--accent); background: var(--op); border-color: rgba(0,255,136,0.25); }
+.key.op:active { box-shadow: 0 0 15px var(--accent-glow); }
 .key.sci { font-size: 15px; }
 .key.fn  { color: var(--danger); font-size: 16px; }
+.key.fn:active { box-shadow: 0 0 12px rgba(255, 85, 119, 0.2); }
 .key.eq  {
     color: var(--bg);
     background: var(--accent);
     border-color: var(--accent);
     font-weight: 700;
     box-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+}
+.key.eq:active {
+    transform: scale(0.92);
+    box-shadow: 0 0 25px var(--accent);
 }
 .key.small { font-size: 13px; padding: 10px 12px; flex: 0 0 auto; }
 
@@ -221,7 +336,15 @@ input[type="text"] { margin-bottom: 10px; }
 }
 .subresult.error { color: var(--danger); }
 
-/* ---------- Matrix ---------- */
+.specialized-tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+.specialized-tools .subcard {
+    margin-bottom: 0;
+}
 .dimlabel {
     color: var(--text);
     font-size: 14px;
@@ -233,14 +356,25 @@ input[type="text"] { margin-bottom: 10px; }
 
 .matrix-grid {
     display: grid;
-    gap: 6px;
+    gap: 8px;
     margin-bottom: 12px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid var(--key-border);
 }
 .matrix-grid input {
     width: 100%;
     text-align: center;
-    padding: 10px 4px;
+    padding: 12px 4px;
     font-size: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--key-border);
+    transition: all 0.2s ease;
+}
+.matrix-grid input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent);
 }
 .matrix-ops { margin-top: 4px; }
 .matrix-ops .key { flex: 1 1 28%; }

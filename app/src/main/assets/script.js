@@ -3,9 +3,55 @@ let currentExpression = "";
 let currentResult = "0";
 let currentMode = "basic";
 let currentAngleMode = "DEG"; // DEG or RAD
+let history = [];
 
 // DOM Elements
 const tabs = document.querySelectorAll(".tab");
+const historyPanel = document.getElementById("historyPanel");
+const toggleHistory = document.getElementById("toggleHistory");
+const historyList = document.getElementById("historyList");
+const clearHistoryBtn = document.getElementById("clearHistory");
+
+// History logic
+toggleHistory.addEventListener("click", () => {
+    historyPanel.classList.toggle("open");
+});
+
+clearHistoryBtn.addEventListener("click", () => {
+    history = [];
+    renderHistory();
+});
+
+function addToHistory(expr, res) {
+    if (!expr) return;
+    history.unshift({ expr, res });
+    if (history.length > 20) history.pop();
+    renderHistory();
+}
+
+function renderHistory() {
+    if (history.length === 0) {
+        historyList.innerHTML = '<div class="history-empty">No history yet</div>';
+        return;
+    }
+
+    historyList.innerHTML = history.map((item, index) => `
+        <div class="history-item" data-index="${index}">
+            <div class="h-expr">${item.expr}</div>
+            <div class="h-res">${item.res}</div>
+        </div>
+    `).join("");
+
+    document.querySelectorAll(".history-item").forEach(item => {
+        item.addEventListener("click", () => {
+            const idx = item.dataset.index;
+            const data = history[idx];
+            currentExpression = data.expr;
+            currentResult = data.res;
+            updateDisplay();
+        });
+    });
+}
 
 // Tab switching logic
 function setMode(mode) {
@@ -86,6 +132,7 @@ function handleMainKey(act, val) {
             currentResult = evaluateExpression(currentExpression);
             const resDiv = document.getElementById("result");
             resDiv.classList.remove("error");
+            addToHistory(currentExpression, currentResult);
         } catch (err) {
             currentResult = err.message || "Error";
             const resDiv = document.getElementById("result");

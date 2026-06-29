@@ -12,6 +12,20 @@
             <h1 class="brand">ollyz<span>calc</span></h1>
         </header>
 
+        <!-- History Panel -->
+        <div class="history-panel" id="historyPanel">
+            <div class="history-header" id="toggleHistory">
+                <span>History</span>
+                <span class="history-arrow">▾</span>
+            </div>
+            <div class="history-content" id="historyContent">
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">No history yet</div>
+                </div>
+                <button class="key sci small" id="clearHistory">Clear History</button>
+            </div>
+        </div>
+
         <nav class="tabs">
             <button class="tab active" data-mode="basic">Basic</button>
             <button class="tab" data-mode="scientific">Scientific</button>
@@ -103,30 +117,33 @@
                 <button class="key" data-act="num" data-val=".">.</button>
             </div>
 
-            <!-- Permutations & Combinations -->
-            <div class="subcard">
-                <h3>Permutations &amp; Combinations</h3>
-                <div class="row">
-                    <input type="number" id="npr_n" placeholder="n" inputmode="numeric">
-                    <input type="number" id="npr_r" placeholder="r" inputmode="numeric">
-                    <button class="key sci small" data-act="npr">nPr</button>
-                    <button class="key sci small" data-act="ncr">nCr</button>
+            <!-- Specialized Tools -->
+            <div class="specialized-tools">
+                <!-- Permutations & Combinations -->
+                <div class="subcard">
+                    <h3>Permutations &amp; Combinations</h3>
+                    <div class="row">
+                        <input type="number" id="npr_n" placeholder="n" inputmode="numeric">
+                        <input type="number" id="npr_r" placeholder="r" inputmode="numeric">
+                        <button class="key sci small" data-act="npr">nPr</button>
+                        <button class="key sci small" data-act="ncr">nCr</button>
+                    </div>
+                    <div class="subresult" id="combResult">—</div>
                 </div>
-                <div class="subresult" id="combResult">—</div>
-            </div>
 
-            <!-- Statistics -->
-            <div class="subcard">
-                <h3>Statistics <span class="hint">(population std dev)</span></h3>
-                <input type="text" id="statData" placeholder="comma-separated, e.g. 2, 4, 4, 6, 8">
-                <div class="row wrap">
-                    <button class="key sci small" data-act="stat" data-val="mean">Mean</button>
-                    <button class="key sci small" data-act="stat" data-val="median">Median</button>
-                    <button class="key sci small" data-act="stat" data-val="mode">Mode</button>
-                    <button class="key sci small" data-act="stat" data-val="stddev">Std Dev</button>
-                    <button class="key sci small" data-act="stat" data-val="sum">Sum</button>
+                <!-- Statistics -->
+                <div class="subcard">
+                    <h3>Statistics <span class="hint">(pop std dev)</span></h3>
+                    <input type="text" id="statData" placeholder="2, 4, 4, 6, 8">
+                    <div class="row wrap">
+                        <button class="key sci small" data-act="stat" data-val="mean">Mean</button>
+                        <button class="key sci small" data-act="stat" data-val="median">Median</button>
+                        <button class="key sci small" data-act="stat" data-val="mode">Mode</button>
+                        <button class="key sci small" data-act="stat" data-val="stddev">Std Dev</button>
+                        <button class="key sci small" data-act="stat" data-val="sum">Sum</button>
+                    </div>
+                    <div class="subresult" id="statResult">—</div>
                 </div>
-                <div class="subresult" id="statResult">—</div>
             </div>
         </section>
 
