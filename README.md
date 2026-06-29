@@ -2,6 +2,9 @@
 
 A scientific calculator Android app built for **SEN 104 & 214**, demonstrating Android Activity lifecycle methods alongside a full-featured calculator engine.
 
+## DOWNLOAD LINK
+https://github.com/olly-techie/ollyz-calc/releases/download/v2.0.0/app-debug.apk
+
 ## Overview
 
 The app wraps an HTML/CSS/JS calculator UI inside a native Android `WebView`. All calculation logic lives in JavaScript; the Java side handles the Activity lifecycle and persists calculator state across pause/resume.
